@@ -1,59 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Will you be my Valentine?</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Will you be my Valentine?</title>
 
-  <!-- Confetti library -->
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 
 <style>
-:root {
-  --bg1:#ffd6e7;
-  --bg2:#ffeef6;
-  --yes:#ff3b7a;
+:root{
+ --bg1:#ffd6e7;
+ --bg2:#ffeef6;
+ --yes:#ff3b7a;
 }
 
 body{
-  margin:0;
-  min-height:100svh;
-  display:grid;
-  place-items:center;
-  background:radial-gradient(circle at top,var(--bg2),var(--bg1));
-  font-family:system-ui;
-  overflow:hidden;
+ margin:0;
+ min-height:100svh;
+ display:grid;
+ place-items:center;
+ background:radial-gradient(circle at top,var(--bg2),var(--bg1));
+ font-family:system-ui;
+ overflow:hidden;
 }
 
 .card{
-  width:min(720px,92vw);
-  padding:26px;
-  background:#ffffffcc;
-  backdrop-filter:blur(10px);
-  border-radius:22px;
-  text-align:center;
-  box-shadow:0 18px 60px rgba(0,0,0,.15);
+ width:min(720px,92vw);
+ padding:26px;
+ background:#ffffffcc;
+ backdrop-filter:blur(10px);
+ border-radius:22px;
+ text-align:center;
+ box-shadow:0 18px 60px rgba(0,0,0,.15);
+}
+
+/* 🐧 Penguin */
+.penguin{
+ width:min(180px,50vw);
+ margin:auto;
+ display:block;
+ animation:float 2.6s ease-in-out infinite;
+}
+
+@keyframes float{
+ 0%{transform:translateY(0)}
+ 50%{transform:translateY(-12px)}
+ 100%{transform:translateY(0)}
 }
 
 h1{font-size:clamp(26px,4vw,44px)}
 
 .button-zone{
-  position:relative;
-  width:min(520px,92%);
-  height:150px;
-  margin:auto;
+ position:relative;
+ width:min(520px,92%);
+ height:150px;
+ margin:auto;
 }
 
 button{
-  position:absolute;
-  top:50%;
-  transform:translateY(-50%);
-  padding:16px 24px;
-  font-size:18px;
-  font-weight:800;
-  border-radius:999px;
-  border:none;
-  cursor:pointer;
+ position:absolute;
+ top:50%;
+ transform:translateY(-50%);
+ padding:16px 24px;
+ font-size:18px;
+ font-weight:800;
+ border-radius:999px;
+ border:none;
+ cursor:pointer;
 }
 
 #yesBtn{left:18%;background:var(--yes);color:#fff}
@@ -62,9 +75,9 @@ button{
 .result{display:none;margin-top:18px}
 
 #confettiCanvas,#hearts{
-  position:fixed;
-  inset:0;
-  pointer-events:none;
+ position:fixed;
+ inset:0;
+ pointer-events:none;
 }
 </style>
 </head>
@@ -75,10 +88,16 @@ button{
 <canvas id="hearts"></canvas>
 
 <audio id="bgMusic" loop preload="auto">
-  <source src="music.mp3" type="audio/mpeg">
+ <source src="music.mp3" type="audio/mpeg">
 </audio>
 
 <main class="card">
+
+<!-- 🐧 Penguin -->
+<img class="penguin"
+src="https://media.tenor.com/8Q0sQ9sXHhAAAAAi/penguin-love.gif"
+alt="cute penguin">
+
 <h1>Aishwarya will you be my valentine?</h1>
 
 <section class="button-zone" id="zone">
@@ -89,6 +108,7 @@ button{
 <div class="result" id="result">
 <h2>YAY! 💖</h2>
 </div>
+
 </main>
 
 <script>
@@ -101,7 +121,7 @@ const music=document.getElementById("bgMusic");
 /* MUSIC */
 let started=false;
 window.addEventListener("pointerdown",()=>{
-  if(!started){music.volume=0.6;music.play().catch(()=>{});started=true;}
+ if(!started){music.volume=0.6;music.play().catch(()=>{});started=true;}
 },{once:true});
 
 /* VIBRATION */
@@ -109,15 +129,13 @@ function vibrate(p=[40]){if(navigator.vibrate)navigator.vibrate(p);}
 
 /* CONFETTI */
 const confettiCanvas=document.getElementById("confettiCanvas");
-confettiCanvas.width=innerWidth;
-confettiCanvas.height=innerHeight;
 const confettiInstance=confetti.create(confettiCanvas,{resize:true,useWorker:true});
 
 function fullConfetti(){
  const end=Date.now()+1500;
  (function frame(){
-   confettiInstance({particleCount:10,spread:80,origin:{x:Math.random(),y:Math.random()*0.4}});
-   if(Date.now()<end)requestAnimationFrame(frame);
+  confettiInstance({particleCount:10,spread:80,origin:{x:Math.random(),y:Math.random()*0.4}});
+  if(Date.now()<end)requestAnimationFrame(frame);
  })();
 }
 
@@ -131,7 +149,6 @@ let hearts=[];
 function createHeart(x,y){
  hearts.push({x,y,size:Math.random()*18+12,speedY:Math.random()*1.5+.6,drift:(Math.random()-.5),alpha:1});
 }
-
 function drawHeart(x,y,s,a){
  ctx.save();
  ctx.translate(x,y);
@@ -145,14 +162,11 @@ function drawHeart(x,y,s,a){
  ctx.fill();
  ctx.restore();
 }
-
 function animate(){
  ctx.clearRect(0,0,heartCanvas.width,heartCanvas.height);
  hearts.forEach(h=>{
-   h.y-=h.speedY;
-   h.x+=h.drift;
-   h.alpha-=0.004;
-   drawHeart(h.x,h.y,h.size,h.alpha);
+  h.y-=h.speedY; h.x+=h.drift; h.alpha-=0.004;
+  drawHeart(h.x,h.y,h.size,h.alpha);
  });
  hearts=hearts.filter(h=>h.alpha>0);
  requestAnimationFrame(animate);
@@ -166,8 +180,8 @@ yesBtn.onclick=()=>{
  result.style.display="block";
  fullConfetti();
  setInterval(()=>{
-   for(let i=0;i<6;i++)
-     createHeart(innerWidth/2+(Math.random()-0.5)*200,innerHeight*0.7);
+  for(let i=0;i<6;i++)
+   createHeart(innerWidth/2+(Math.random()-0.5)*200,innerHeight*0.7);
  },220);
 };
 
@@ -177,11 +191,11 @@ zone.addEventListener("pointermove",e=>{
  const b=noBtn.getBoundingClientRect();
  const d=Math.hypot(b.left+b.width/2-e.clientX,b.top+b.height/2-e.clientY);
  if(d<140){
-   vibrate([20]);
-   noBtn.style.left=Math.random()*70+"%";
-   noBtn.style.top=Math.random()*70+"%";
-   scale=Math.min(2.2,scale+.08);
-   yesBtn.style.transform=`translateY(-50%) scale(${scale})`;
+  vibrate([20]);
+  noBtn.style.left=Math.random()*70+"%";
+  noBtn.style.top=Math.random()*70+"%";
+  scale=Math.min(2.2,scale+.08);
+  yesBtn.style.transform=`translateY(-50%) scale(${scale})`;
  }
 });
 noBtn.onclick=e=>e.preventDefault();
