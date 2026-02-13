@@ -51,11 +51,31 @@
     }
 
     .art {
-      width: min(260px, 80vw);
-      margin: 0 auto 10px;
+      width: min(240px, 70vw);
+      margin: 6px auto 14px;
       display: block;
-      filter: drop-shadow(0 10px 14px rgba(0,0,0,.12));
+
+      border-radius: 18px;
+
+      /* soft blend */
+      background: radial-gradient(circle at center,
+        rgba(255,255,255,0.9) 0%,
+        rgba(255,255,255,0.5) 40%,
+        rgba(255,255,255,0) 70%);
+
+      padding: 12px;
+
+      /* dreamy softness */
+      filter:
+        brightness(1.04)
+        contrast(1.03)
+        saturate(1.08)
+        drop-shadow(0 12px 22px rgba(0,0,0,.18));
+
+      /* gentle floating animation */
+      animation: penguinFloat 3.2s ease-in-out infinite;
     }
+
 
     h1 {
       font-size: clamp(26px, 4vw, 44px);
@@ -117,15 +137,29 @@
     }
 
     .fireworks {
-      width: min(380px, 90vw);
-      margin: 0 auto;
+      max-width: min(380px, 90vw);
+      max-height: 45vh;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      margin: 12px auto 0;
       display: block;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.18);
     }
+
 
     @keyframes pop {
       from { transform: scale(.96); opacity: 0; }
       to { transform: scale(1); opacity: 1; }
     }
+
+    @keyframes penguinFloat {
+      0% { transform: translateY(0px) scale(1); }
+      50% { transform: translateY(-8px) scale(1.02); }
+      100% { transform: translateY(0px) scale(1); }
+    }
+
   </style>
 </head>
 
