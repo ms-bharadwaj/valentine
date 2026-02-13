@@ -178,13 +178,14 @@
   <main class="card">
     <!-- ANIMAL WITH HEART -->
     <img
+      id="penguin"
       class="art"
       src="penguin.jpg"
       alt="cute penguin"
     />
 
 
-    <h1>Aishwarya will you be my valentine?</h1>
+    <h1 id="question">Aishwarya will you be my valentine?</h1>
 
     <section class="button-zone" id="zone">
       <button id="yesBtn">Yes</button>
@@ -195,7 +196,7 @@
     <div class="hint" id="hint">“No” seems a bit shy 😈</div>
 
     <section class="result" id="result">
-      <h2>YAY! 🎉</h2>
+      <h2 id="resultText">YAY! 🎉</h2>
       <img
         class="fireworks"
         src="us.jpg"
@@ -305,11 +306,21 @@
     /* ---------- YES CLICK ---------- */
     yesBtn.addEventListener("click", () => {
       zone.style.display = "none";
-      hint.style.display = "none";     // HIDE THE HINT
+      hint.style.display = "none";
       result.style.display = "block";
+
+      // remove penguin & question
+      document.getElementById("penguin").style.display = "none";
+      document.getElementById("question").style.display = "none";
+
+      // change text
+      document.getElementById("resultText").innerHTML =
+        'Aishwarya <span style="color:#ff3b7a">❤️</span> Sukruth';
+
       resizeConfettiCanvas();
       fullScreenConfetti();
     });
+
   </script>
 </body>
 </html>
