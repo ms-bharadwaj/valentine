@@ -137,16 +137,21 @@
     }
 
     .fireworks {
-      max-width: min(380px, 90vw);
-      max-height: 45vh;
+      display: block;
+      margin: 14px auto 0;
+
       width: auto;
       height: auto;
+
+      max-width: min(420px, 92vw);
+      max-height: min(60vh, 520px);
+
       object-fit: contain;
-      margin: 12px auto 0;
-      display: block;
-      border-radius: 16px;
-      box-shadow: 0 10px 30px rgba(0,0,0,.18);
+
+      border-radius: 18px;
+      box-shadow: 0 12px 30px rgba(0,0,0,.18);
     }
+
 
 
     @keyframes pop {
@@ -186,7 +191,7 @@
     <div class="hint" id="hint">“No” seems a bit shy 😈</div>
 
     <section class="result" id="result">
-      <h2>YAY! 🎉</h2>
+      <h2>HAHA! 🎉</h2>
       <img
         class="fireworks"
         src="us.jpg"
